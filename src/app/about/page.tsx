@@ -1,21 +1,51 @@
 // src/app/about/page.tsx
+import { SliceZone } from "@prismicio/react";
+import { createClient } from "@/prismicio";
 
-export default function AboutPage() {
+type PageData = {
+  data: {
+    title?: any;
+    content?: any;
+    slices?: any[];
+  };
+};
+
+export default async function AboutPage() {
+  const client = createClient();
+
+  // Fetch the "page" document with UID "about"
+  const page = (await client.getByUID("blogcontent", "about")) as PageData;
+
   return (
     <div className="container" style={{ paddingTop: "2rem" }}>
       <section className="card">
-        <h1 style={{ fontSize: "1.6rem", fontWeight: 600, marginBottom: "0.75rem" }}>
-          About Astro Portal
+        <h1
+          style={{
+            fontSize: "1.6rem",
+            fontWeight: 600,
+            marginBottom: "0.75rem",
+          }}
+        >
+          {page.data.title
+            ? page.data.title[0]?.text ?? "About Astro Portal"
+            : "About Astro Portal"}
         </h1>
-        <p className="muted" style={{ marginBottom: "1rem" }}>
-          This project aims to blend serious astrology with practical life tracking —
-          charts, events, and focused guidance — in a way that is approachable for
-          everyday people.
-        </p>
-        <p className="muted">
-          Over time, you can use this page to share your story, philosophy, and the
-          principles behind your tools, helping visitors build trust in your work.
-        </p>
+
+        {/* Simple rich-text rendering without slices for now */}
+        {page.data.content && page.data.content.length > 0 ? (
+          <div className="muted">
+            {page.data.content.map((block: any, index: number) => (
+              <p key={index} style={{ marginBottom: "0.75rem" }}>
+                {block.text}
+              </p>
+            ))}
+          </div>
+        ) : (
+          <p className="muted">
+            This page is powered by Prismic. Add content in your Prismic
+            dashboard to change what appears here.
+          </p>
+        )}
       </section>
     </div>
   );

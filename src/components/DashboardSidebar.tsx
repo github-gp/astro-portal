@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const items = [
   { href: "/dashboard", label: "Overview" },
@@ -16,14 +17,25 @@ const items = [
 export function DashboardSidebar() {
   const pathname = usePathname();
 
-  return (
+  const { data: session } = useSession();
+  const userName = session?.user?.name || "Your account";
+  const userEmail = session?.user?.email || "";
+
+
+   return (
     <aside className="sidebar">
       <div>
         <p className="sidebar-heading">Workspace</p>
-        <p className="muted" style={{ fontSize: "0.8rem" }}>
-          This is your personal astrology dashboard.
+        <p style={{ fontSize: "0.9rem", fontWeight: 500 }}>
+          {userName}
         </p>
+        {userEmail && (
+          <p className="muted" style={{ fontSize: "0.8rem" }}>
+            {userEmail}
+          </p>
+        )}
       </div>
+
 
       <nav className="sidebar-nav" aria-label="Dashboard">
         {items.map((item) => {

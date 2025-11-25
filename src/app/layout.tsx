@@ -4,7 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { Providers } from "@/components/Providers";
 
 export const metadata: Metadata = {
-  title: "Astro Portal",
+  title: "Astroz AI",
   description: "Personalized astrology workspace...",
 };
 

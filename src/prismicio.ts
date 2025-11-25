@@ -9,10 +9,12 @@ import { enableAutoPreviews } from "@prismicio/next";
 export const repositoryName =
   process.env.PRISMIC_REPOSITORY_NAME ?? "CHANGE_ME";
 
-// Map Prismic document types to site routes
+// Map Prismic types to site routes
 const routes: Route[] = [
-  { type: "blogcontent", path: "/:uid" },
-  { type: "blogcontent", path: "/blog/:uid" },
+  // Learn detail pages
+  { type: "learn_article", path: "/learn/:uid" },
+  // Blog detail pages
+  { type: "blog_post", path: "/blog/:uid" },
 ];
 
 export function createClient(config: ClientConfig = {}) {
@@ -22,7 +24,7 @@ export function createClient(config: ClientConfig = {}) {
     fetchOptions:
       process.env.NODE_ENV === "production"
         ? { next: { tags: ["prismic"] }, cache: "force-cache" }
-        : { next: { revalidate: 5 } },
+        : { next: { revalidate: 10 } },
     ...config,
   });
 

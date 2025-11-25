@@ -1,0 +1,7 @@
+Work for 25/11/2025
+-------------------------
+Add Prismic to other pages
+Do customisation using Prismic
+Create content for pages wherever prismic integration done.
+Add the app Pnachnaga Calculator inside the login and Place this as a product to buy on App page
+Also add these app to the login section from where the users can purchase it 
